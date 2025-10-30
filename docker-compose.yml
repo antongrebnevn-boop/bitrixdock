@@ -35,9 +35,9 @@ services:
             - ${SITE_PATH}:/var/www/bitrix
             - ./logs/${WEB_SERVER_TYPE}:/var/log/${WEB_SERVER_TYPE}
             - /etc/localtime:/etc/localtime/:ro
-        ports:
-            - '${INTERFACE}:80:80'
-            - '${INTERFACE}:443:443'
+        expose:
+            - "80"
+            - "443"
         networks:
             - bitrixdock
         environment:
@@ -51,8 +51,8 @@ services:
             - ./logs/db:/var/log/mysql
             - /etc/localtime:/etc/localtime/:ro
             - db:/var/lib/mysql
-        ports:
-            - '${INTERFACE}:3306:3306'
+        expose:
+            - "3306"
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_USER: ${MYSQL_USER}
@@ -73,8 +73,8 @@ services:
 
     adminer:
         image: dockette/adminer:full
-        ports:
-            - '${INTERFACE}:8080:80'
+        expose:
+            - "80"
         environment:
             UPLOAD: 1024M # upload_max_filesize, post_max_size
             TZ: Europe/Moscow
